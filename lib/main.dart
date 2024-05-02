@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
           appBar: AppBar(
             elevation: 0.0,
-            title: Text("Amazon"),
+            title: Text("Amazon Clone"),
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
