@@ -1,11 +1,29 @@
-express = require('express');
+const express = require('express');
+const user=require('../model/user');
 const authRouter=express.Router();
 
-authRouter.post("/api/signup",(req, res) => {
+
+//validation
+authRouter.post("/api/signup",async(req, res) => {
+    const {name ,email,password}=req.body;
+  const exist = await user.findOne({email});
+  if(exist){
+    return res.status(400).json({msg:"user already exists"});
+  }
     //req.body - Map Type
-    const {name ,email,pwd}=req.body;
+    
+
+//upload data to DB
+var user=new User({
+    name,
+    email,
+    password,
+})
+user = await user.save();
+res.json(user);
+
+
 });
 
 module.exports =authRouter;
 
-//mongodb+srv://ankitwork139:<9430152492@Ankit>@amazon-clone.fhit2cb.mongodb.net/?retryWrites=true&w=majority&appName=amazon-clone
