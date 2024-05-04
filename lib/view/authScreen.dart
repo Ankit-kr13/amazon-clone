@@ -307,7 +307,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ],
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               TextFormField(
                                 validator: (value) {
@@ -336,7 +336,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               InkWell(
                                 onTap: (() => signUpSubmit()),
@@ -353,7 +353,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               Divider(
                                 thickness: 2,
@@ -363,7 +363,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                               Text("Already a Customer ?"),
                               SizedBox(
-                                height: 15,
+                                height: 5,
                               ),
                               InkWell(
                                 onTap: () {
