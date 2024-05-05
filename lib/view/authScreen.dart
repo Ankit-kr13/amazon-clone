@@ -1,3 +1,4 @@
+import 'package:amazon_clone/controller/authController.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -13,12 +14,13 @@ class _AuthScreenState extends State<AuthScreen> {
   var signUpKey = GlobalKey<FormState>();
   var signInKey = GlobalKey<FormState>();
 
-  void signUpSubmit() {
+  void signUpSubmit(String email, String password,String name) {
     final isValid = signUpKey.currentState!.validate();
     if (isValid) {
       return;
     }
     signUpKey.currentState!.save();
+    authController().signUpUser(email: email, password: password, name: name)
   }
 
   void signInSubmit() {
@@ -27,6 +29,7 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
     signInKey.currentState!.save();
+
   }
 
   @override
