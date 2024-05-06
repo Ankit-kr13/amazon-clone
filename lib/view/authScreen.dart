@@ -14,13 +14,14 @@ class _AuthScreenState extends State<AuthScreen> {
   var signUpKey = GlobalKey<FormState>();
   var signInKey = GlobalKey<FormState>();
 
-  void signUpSubmit(String email, String password,String name) {
+  void signUpSubmit(String email, String password, String name) {
     final isValid = signUpKey.currentState!.validate();
     if (isValid) {
       return;
     }
     signUpKey.currentState!.save();
-    authController().signUpUser(email: email, password: password, name: name)
+    authController().signUpUser(
+        context: context, email: email, password: password, name: name);
   }
 
   void signInSubmit() {
@@ -29,8 +30,11 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
     signInKey.currentState!.save();
-
   }
+
+  final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +86,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               height: 10,
                             ),
                             TextFormField(
+                              controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: (value) {
                                 if (value!.isEmpty ||
@@ -109,13 +114,19 @@ class _AuthScreenState extends State<AuthScreen> {
                               height: 10,
                             ),
                             TextFormField(
+                              controller: passwordController,
                               validator: (value) {
-                                if (value!.isEmpty ||
-                                    !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                        .hasMatch(value)) {
-                                  return "Enter valid Password";
+                                RegExp regex = RegExp(
+                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+                                if (value!.isEmpty) {
+                                  return "Please Enter Password";
+                                } else {
+                                  if (value.length < 6) {
+                                    return " Enter Valid Password";
+                                  } else {
+                                    return null;
+                                  }
                                 }
-                                return null;
                               },
                               obscureText: true,
                               decoration: InputDecoration(
@@ -218,6 +229,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 height: 20,
                               ),
                               TextFormField(
+                                controller: nameController,
                                 validator: ((value) {
                                   if (value!.isEmpty) {
                                     return "please enter your name";
@@ -244,6 +256,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 height: 20,
                               ),
                               TextFormField(
+                                controller: emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
                                   if (value!.isEmpty ||
@@ -273,13 +286,19 @@ class _AuthScreenState extends State<AuthScreen> {
                                 height: 20,
                               ),
                               TextFormField(
+                                controller: passwordController,
                                 validator: (value) {
-                                  if (value!.isEmpty ||
-                                      !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                          .hasMatch(value)) {
-                                    return "Enter valid Password";
+                                  RegExp regex = RegExp(
+                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+                                  if (value!.isEmpty) {
+                                    return "Please Enter Password";
+                                  } else {
+                                    if (value.length < 6) {
+                                      return " Enter Valid Password";
+                                    } else {
+                                      return null;
+                                    }
                                   }
-                                  return null;
                                 },
                                 obscureText: true,
                                 decoration: InputDecoration(
@@ -314,12 +333,17 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                               TextFormField(
                                 validator: (value) {
-                                  if (value!.isEmpty ||
-                                      !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                          .hasMatch(value)) {
-                                    return "Enter valid Password";
+                                  RegExp regex = RegExp(
+                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+                                  if (value!.isEmpty) {
+                                    return "Please Enter Password";
+                                  } else {
+                                    if (value.length < 6) {
+                                      return " Enter Valid Password";
+                                    } else {
+                                      return null;
+                                    }
                                   }
-                                  return null;
                                 },
                                 obscureText: true,
                                 decoration: InputDecoration(
@@ -342,7 +366,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                 height: 10,
                               ),
                               InkWell(
-                                onTap: (() => signUpSubmit()),
+                                onTap: (() => signUpSubmit(
+                                    emailController.text,
+                                    passwordController.text,
+                                    nameController.text)),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal:
